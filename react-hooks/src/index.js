@@ -1,33 +1,42 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useReducer } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
+const initialState = {
+  message: "hi"
+};
+
+function reducer(state, action) {
+  switch(action.type) {
+    case "yell":
+      return {
+        message: "HEY!"
+      };
+    case "whisper":
+      return {
+        message: "excuse me"
+      };
+    default: {
+      return {
+        message: "nothing"
+      }
+    }
+  }
+}
+
 function App() {
 
-  const [data, setData ] = useState([]);
-
-  useEffect(() => {
-    fetch(`https://api.github.com/users`)
-      .then(response => response.json())
-      .then(setData)
-  }, []);
-
-  if(data) {
-    return (
-      <ul>
-        {data.map( user => (
-          <li key={user.id}>{user.login}</li>
-        ))}
-      </ul>
-    );
-  } else {
-
-  }
+  const [state, dispatch ] = useReducer(
+    reducer,
+    initialState
+  );
 
   return (
-    <p>
-      No users
-    </p>
+    <>
+      <p>Message: {state.message}</p>
+      <button onClick={ () => dispatch({type: "yell"}) }>YELL</button>
+      <button onClick={ () => dispatch({type: "whisper"}) }>Whisper</button>
+    </>
   );
 }
 
