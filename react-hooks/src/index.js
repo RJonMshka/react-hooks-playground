@@ -1,20 +1,16 @@
-import React, { useRef } from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
-function App() {
 
-  const sound = useRef()
-  const color = useRef()
+function App() {
 
   return (
     <form>
       <input 
-        ref={sound}
         type="text"
         placeholder='Sound...' />
       <input 
-        ref={color}
         type="color" />
       <button>ADD</button>
     </form>
