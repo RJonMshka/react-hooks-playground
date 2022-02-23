@@ -1,24 +1,25 @@
 import React, { useContext, createContext } from 'react';
 import ReactDOM from 'react-dom';
-import App from "./App";
 import './index.css';
+import { useFetch } from './useFetch';
 
-const TreesContext = createContext();
+function App({ login }) {
+  const { loading, data, error } = useFetch(`https://api.github.com/users/${login}`);
 
-export const useTrees = () => useContext(TreesContext);
+  if (loading) return <h1>Loading...</h1>;
+  if(error) return <pre>{JSON.stringify(error, null, 2)}</pre>;
 
-const trees = [
-  { id: "1", type: "Maple" },
-  { id: "2", type: "Oak" },
-  { id: "3", type: "Family" },
-  { id: "4", type: "Component" },
-];
+  return (
+    <div>
+      <p>{ data.login }</p>
+    </div>
+  );
+
+}
 
 
 
 ReactDOM.render(
-  <TreesContext.Provider value={ {trees} }>
-    <App />
-  </TreesContext.Provider>,
+  <App  login="rjonmshka" />,
   document.getElementById('root')
 );
