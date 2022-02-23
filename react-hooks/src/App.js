@@ -1,18 +1,18 @@
 import './App.css';
-import { useState } from "react";
+import { useTrees } from "./";
 
 function App() {
-  const [checked, setChecked] = useState(false);
+
+  const { trees } = useTrees();
 
   return (
     <div>
-      <label for="checkbox1">{ checked ? "Checked" :  "Not Checked" }</label>
-      <input 
-        id="checkbox1"
-        type="checkbox" 
-        value={checked}
-        onChange={ () => setChecked( checked => !checked ) }
-        />
+      <h1>Trees</h1>
+      { trees.map( tree => (
+        <p key={tree.id}>
+          {tree.type}
+        </p>
+      )) }
     </div>
   );
 }
